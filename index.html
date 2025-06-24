@@ -1529,81 +1529,63 @@
         document.querySelector('.popups-cont__overlay').addEventListener('click', closeHandler);
     </script>
     <script>
-        // Dice Roll
         var winCount = 0;
         var lossCount = 0;
         var gameCount = 0;
         var thePoint = 0;
-        // var cash         = 100;
-        // var betInput     = document.getElementById('betField').value;
-        // var bet          = parseInt(betInput);
+    
         var elDiceOne = document.getElementById('dice1');
         var elComeOut = document.getElementById('comeOutButton');
         var elPointRoll = document.getElementById('pointRollButton');
         var elWinOrLoss = document.getElementById('winOrLoss');
         var elCrapsWins = document.getElementById('crapWins');
         var elCrapsLosses = document.getElementById('crapLosses');
+    
         elComeOut.onclick = function () { comeOutRoll(); };
         elPointRoll.onclick = function () { pointRoll(); };
-        // Come Out Roll Function
+    
+        // NEW: biến đếm để điều khiển rollTotal lần lượt từ 1 đến 6
+        var currentRoll = 1;
+    
         function comeOutRoll() {
-            // Initial dice variables
-            var diceOne = Math.floor((Math.random() * 6) + 1);
+            // Gán giá trị lần lượt từ 1 đến 6
+            var diceOne = currentRoll;
             var rollTotal = diceOne;
             console.log(rollTotal + ' ' + diceOne);
+    
             elDiceOne.classList.toggle('animate');
-            //Dice reset and display
+    
             for (var i = 1; i <= 6; i++) {
                 elDiceOne.classList.remove('show-' + i);
                 if (diceOne === i) {
                     elDiceOne.classList.add('show-' + i);
                 }
             }
-            if (rollTotal  == 1) {
-                setTimeout(() => {
-                    $popupsCont.classList.add('s--popup-active');
-                    $popup.classList.add('s--active');
-                    document.querySelector("#txt-noiDung").innerHTML = "Tiên nữ ngoài biển khơi nè 🧡";
-                }, 1000);
-            }
-            if (rollTotal  == 2) {
-                setTimeout(() => {
-                    $popupsCont.classList.add('s--popup-active');
-                    $popup.classList.add('s--active');
-                    document.querySelector("#txt-noiDung").innerHTML = "Tớ không biết đâu là cậu đâu là hoa 🌸";
-                }, 1000);
-            }
-            if (rollTotal  == 3) {
-                setTimeout(() => {
-                    $popupsCont.classList.add('s--popup-active');
-                    $popup.classList.add('s--active');
-                    document.querySelector("#txt-noiDung").innerHTML = "Ảnh này cậu xinh lắm nhaa 💖 ";
-                }, 1000);
-            }
-            if (rollTotal  == 4) {
-                setTimeout(() => {
-                    $popupsCont.classList.add('s--popup-active');
-                    $popup.classList.add('s--active');
-                    document.querySelector("#txt-noiDung").innerHTML = "Chúc mừng Phó trưởng ban đã hoàn thành xuất sắc nhiệm vụ 🎉";
-                }, 1000);
-            }
-            if (rollTotal  == 5) {
-                setTimeout(() => {
-                    $popupsCont.classList.add('s--popup-active');
-                    $popup.classList.add('s--active');
-                    document.querySelector("#txt-noiDung").innerHTML = "Chúc cậu sẽ đạt được thật nhiều mục tiêu mới nha 😙";
-                }, 1000);
-            }
-            if (rollTotal  == 6) {
-                setTimeout(() => {
-                    $popupsCont.classList.add('s--popup-active');
-                    $popup.classList.add('s--active');
-                    document.querySelector("#txt-noiDung").innerHTML = "Va phải sự xinh đẹp này là chết người luôn 🫢";
-                }, 1000);
-            }
-            setTimeout(winLossCount(), 1500);
-        }// END Come out roll function
+    
+            // Nội dung popup theo từng rollTotal
+            let messages = {
+                1: "Tiên nữ ngoài biển khơi nè 🧡",
+                2: "Tớ không biết đâu là cậu đâu là hoa 🌸",
+                3: "Ảnh này cậu xinh lắm nhaa 💖",
+                4: "Chúc mừng Phó trưởng ban đã hoàn thành xuất sắc nhiệm vụ 🎉",
+                5: "Chúc cậu sẽ đạt được thật nhiều mục tiêu mới nha 😙",
+                6: "Va phải sự xinh đẹp này là chết người luôn 🫢"
+            };
+    
+            setTimeout(() => {
+                $popupsCont.classList.add('s--popup-active');
+                $popup.classList.add('s--active');
+                document.querySelector("#txt-noiDung").innerHTML = messages[rollTotal];
+            }, 1000);
+    
+            // Tăng currentRoll cho lần tiếp theo
+            currentRoll++;
+            if (currentRoll > 6) currentRoll = 1;
+    
+            setTimeout(() => winLossCount(), 1500);  // Gọi đúng cách: dùng hàm chứ không gọi kết quả
+        }
     </script>
+
 
 </body>
 </html>
